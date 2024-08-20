@@ -34,3 +34,7 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
+
+router.get('/login', (req, res) => {
+    res.json({ message: req.t('login') });
+});

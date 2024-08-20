@@ -17,4 +17,13 @@ router.post('/', authenticateToken, async (req, res) => {
     res.json({ message: 'Birthday added!' });
 });
 
+router.post('/', authenticateToken, async (req, res) => {
+    const birthday = new Birthday(req.body);
+    await birthday.save();
+
+    io.emit('newBirthday', birthday); // Emit an event when a new birthday is added
+
+    res.json({ message: 'Birthday added!' });
+});
+
 module.exports = router;

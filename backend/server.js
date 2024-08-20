@@ -104,6 +104,23 @@ userSchema.methods.comparePassword = function (password) {
     return bcrypt.compare(password, this.password);
 };
 
+const i18n = require('./config/i18n');
+app.use(i18n);
+
+const http = require('http');
+const socketIo = require('socket.io');
+
+const server = http.createServer(app);
+const io = socketIo(server);
+
+io.on('connection', (socket) => {
+    console.log('New client connected');
+    
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
